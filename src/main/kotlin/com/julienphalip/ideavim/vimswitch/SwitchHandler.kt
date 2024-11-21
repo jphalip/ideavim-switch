@@ -9,17 +9,17 @@ import com.maddyhome.idea.vim.ex.ranges.Range
 class SwitchHandler(
   // reverse: true for :SwitchReverse, false for :Switch
   private val reverse: Boolean,
-  private val editor: EditorAdapter = EditorAdapter(),
+  private val editorAdapter: EditorAdapter = EditorAdapter(),
   private val matcher: PatternMatcher = PatternMatcher(),
 ) : CommandAliasHandler {
   override fun execute(
     command: String,
     range: Range,
-    vimEditor: VimEditor,
+    editor: VimEditor,
     context: ExecutionContext,
   ) {
     // Get the current line and cursor position
-    val lineRange = editor.getLineRange(vimEditor)
+    val lineRange = editorAdapter.getLineRange(editor)
 
     // Get enabled patterns, reversing them if needed
     val definitions =
@@ -40,7 +40,7 @@ class SwitchHandler(
     // Find and apply replacement if there's a match at cursor position
     val switchMatch = matcher.findMatch(lineRange.text, lineRange.caretOffset, definitions)
     if (switchMatch != null) {
-      editor.replace(vimEditor, lineRange, switchMatch)
+      editorAdapter.replace(editor, lineRange, switchMatch)
     }
   }
 }

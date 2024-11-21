@@ -12,7 +12,7 @@ to switch between related text segments.
     - In IntelliJ IDEA: Settings/Preferences → Plugins → Marketplace → Search
       for "Vim-Switch"
     - Or download
-      from [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/25776-vim-peekaboo)
+      from [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/25899-vim-switch)
 3. Add `set switch` to your `~/.ideavimrc` file, then run `:source ~/.ideavimrc` or restart the IDE.
 
 ## Usage
