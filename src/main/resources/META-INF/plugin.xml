@@ -7,4 +7,6 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>IdeaVIM</depends>
+    <depends>com.intellij.java</depends>
+    <depends>org.jetbrains.kotlin</depends>
 </idea-plugin>

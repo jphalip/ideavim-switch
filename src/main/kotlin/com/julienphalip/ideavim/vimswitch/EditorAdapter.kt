@@ -1,6 +1,7 @@
 package com.julienphalip.ideavim.vimswitch
 
 import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.util.TextRange
 import com.maddyhome.idea.vim.api.VimEditor
 import com.maddyhome.idea.vim.newapi.ij
@@ -26,12 +27,12 @@ class EditorAdapter {
 
   // Replace text in the editor within a write action
   fun replace(
-    editor: VimEditor,
+    editor: Editor,
     lineRange: LineRange,
     match: SwitchMatch,
   ) {
-    WriteCommandAction.runWriteCommandAction(editor.ij.project) {
-      editor.ij.document.replaceString(
+    WriteCommandAction.runWriteCommandAction(editor.project) {
+      editor.document.replaceString(
         lineRange.start + match.start,
         lineRange.start + match.end,
         match.replacement,
