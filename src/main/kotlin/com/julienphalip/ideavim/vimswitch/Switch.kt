@@ -21,7 +21,7 @@ class Switch : VimExtension {
     private val patternLoader = PatternLoader()
 
     // Get patterns enabled via switch_definitions in .ideavimrc
-    fun getEnabledPatterns(): List<Any> {
+    fun getEnabledPatterns(reverse: Boolean): List<Any> {
       val builtinDefinitions =
         VimPlugin.getVariableService()
           .getGlobalVariableValue(SWITCH_DEFINITIONS_VARIABLE_NAME)
@@ -30,7 +30,7 @@ class Switch : VimExtension {
         VimPlugin.getVariableService()
           .getGlobalVariableValue(SWITCH_CUSTOM_DEFINITIONS_VARIABLE_NAME) as? VimList
           ?: VimList(mutableListOf())
-      return patternLoader.getEnabledPatterns(builtinDefinitions, customDefinitions)
+      return patternLoader.getEnabledPatterns(builtinDefinitions, customDefinitions, reverse)
     }
   }
 

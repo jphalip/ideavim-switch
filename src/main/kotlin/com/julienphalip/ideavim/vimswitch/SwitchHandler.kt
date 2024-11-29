@@ -20,23 +20,7 @@ class SwitchHandler(
   ) {
     // Get the current line and cursor position
     val lineRange = editorAdapter.getLineRange(editor)
-
-    // Get enabled patterns, reversing them if needed
-    val definitions =
-      if (reverse) {
-        // For reverse, swap pattern and replacement (v->k instead of k->v)
-        // and reverse lists to cycle in opposite direction
-        Switch.getEnabledPatterns().map { def ->
-          when (def) {
-            is Map<*, *> -> def.entries.associate { (k, v) -> v.toString() to k.toString() }
-            is List<*> -> def.reversed()
-            else -> def
-          }
-        }
-      } else {
-        Switch.getEnabledPatterns()
-      }
-
+    val definitions = Switch.getEnabledPatterns(reverse)
     // Find and apply replacement if there's a match at cursor position
     val switchMatch = matcher.findMatch(lineRange.text, lineRange.caretOffset, definitions)
     if (switchMatch != null) {

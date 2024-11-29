@@ -4,6 +4,7 @@ import com.julienphalip.ideavim.vimswitch.patterns.BasicPatterns
 import com.julienphalip.ideavim.vimswitch.patterns.JavaPatterns
 import com.julienphalip.ideavim.vimswitch.patterns.JavaScriptPatterns
 import com.julienphalip.ideavim.vimswitch.patterns.MarkdownPatterns
+import com.julienphalip.ideavim.vimswitch.patterns.PatternUtils
 import com.julienphalip.ideavim.vimswitch.patterns.RSpecPatterns
 import com.julienphalip.ideavim.vimswitch.patterns.RubyPatterns
 import com.julienphalip.ideavim.vimswitch.patterns.RustPatterns
@@ -37,6 +38,7 @@ class PatternLoader {
   fun getEnabledPatterns(
     builtinDefinitions: String,
     customDefinitions: VimList,
+    reverse: Boolean,
   ): List<Any> {
     // Expand any group references and get individual pattern names
     val builtinPatternNames =
@@ -69,6 +71,29 @@ class PatternLoader {
         map.takeIf { it.isNotEmpty() } // Return the map if it has any entries
       }
 
-    return builtinPatterns + customPatterns
+    val allPatterns = builtinPatterns + customPatterns
+
+    if (reverse) {
+      // For reverse, swap pattern and replacement (v->k instead of k->v)
+      // and reverse lists to cycle in opposite direction
+      return allPatterns.map { def ->
+        when (def) {
+          is PatternUtils.ReversiblePattern -> {
+            def.backwardMap()
+          }
+          is List<*> -> def.reversed()
+          else -> def
+        }
+      }
+    } else {
+      return allPatterns.map { def ->
+        when (def) {
+          is PatternUtils.ReversiblePattern -> {
+            def.forwardMap()
+          }
+          else -> def
+        }
+      }
+    }
   }
 }

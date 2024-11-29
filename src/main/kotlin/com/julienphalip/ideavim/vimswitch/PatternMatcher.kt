@@ -14,7 +14,7 @@ class PatternMatcher {
     for (definition in definitions) {
       when (definition) {
         is Map<*, *> -> {
-          // Regex-based replacements (e.g. "(?i)true" -> "false")
+          // Regex-based replacements
           val match = findMapMatch(text, cursorOffset, definition)
           if (match != null) return match
         }

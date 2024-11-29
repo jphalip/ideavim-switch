@@ -50,6 +50,7 @@ abstract class SwitchTestBase : BasePlatformTestCase() {
         VimList(
           mutableListOf(),
         ),
+        false,
       )
     val match = patternMatcher.findMatch(text, caretIndex, definitions)
 

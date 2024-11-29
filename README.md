@@ -24,12 +24,12 @@ Place your cursor on a term and use:
 You might want to map these commands, for example:
 ```vim
 " Map to <leader>s and <leader>S
-nmap <leader>s :Switch<CR>
-nmap <leader>S :SwitchReverse<CR>
+nnoremap <C-s> :Switch<CR>
+nnoremap <C-S-s> :SwitchReverse<CR>
 
 " Or use - and +
-nmap - :Switch<CR>
-nmap + :SwitchReverse<CR>
+nnoremap - :Switch<CR>
+nnoremap + :SwitchReverse<CR>
 ```
 
 ## Configuration
