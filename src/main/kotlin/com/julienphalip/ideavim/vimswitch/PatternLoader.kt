@@ -37,7 +37,7 @@ class PatternLoader {
   // Get patterns enabled in .ideavimrc, or default to basic patterns
   fun getEnabledPatterns(
     builtinDefinitions: String,
-    customDefinitions: VimList,
+    customDefinitions: VimList?,
     reverse: Boolean,
   ): List<Any> {
     // Expand any group references and get individual pattern names
@@ -57,8 +57,8 @@ class PatternLoader {
     val builtinPatterns = builtinPatternNames.mapNotNull { builtins[it] }.toList()
 
     // Parse custom definitions into patterns
-    val customPatterns: List<Map<String, String>> =
-      customDefinitions.values.mapNotNull { definition ->
+    val customPatterns: List<Any> =
+      (customDefinitions?.values?.mapNotNull { definition ->
         val map = LinkedHashMap<String, String>()
         (definition as? VimList)?.values?.forEach { entry ->
           val pair = entry as? VimList
@@ -68,10 +68,11 @@ class PatternLoader {
             map[key] = value
           }
         }
-        map.takeIf { it.isNotEmpty() } // Return the map if it has any entries
-      }
+        // Cast the map to Any when returning it
+        map.takeIf { it.isNotEmpty() } as Any? // Return the map as Any if it has entries
+      } ?: emptyList())
 
-    val allPatterns = builtinPatterns + customPatterns
+    val allPatterns = customPatterns + builtinPatterns
 
     if (reverse) {
       // For reverse, swap pattern and replacement (v->k instead of k->v)

@@ -28,10 +28,17 @@ abstract class SwitchTestBase : BasePlatformTestCase() {
       }
 
     `when`(variableService.getGlobalVariableValue("switch_definitions"))
-      .thenReturn(VimString(getPatternString()))
+      .thenReturn(VimString(getDefinitions()))
+
+    `when`(variableService.getGlobalVariableValue("switch_custom_definitions"))
+      .thenReturn(getCustomDefinitions())
   }
 
-  abstract fun getPatternString(): String
+  abstract fun getDefinitions(): String
+
+  open fun getCustomDefinitions(): VimList? {
+    return null
+  }
 
   override fun tearDown() {
     vimPluginMock.close()
@@ -46,10 +53,8 @@ abstract class SwitchTestBase : BasePlatformTestCase() {
 
     val definitions =
       patternLoader.getEnabledPatterns(
-        getPatternString(),
-        VimList(
-          mutableListOf(),
-        ),
+        getDefinitions(),
+        getCustomDefinitions(),
         false,
       )
     val match = patternMatcher.findMatch(text, caretIndex, definitions)

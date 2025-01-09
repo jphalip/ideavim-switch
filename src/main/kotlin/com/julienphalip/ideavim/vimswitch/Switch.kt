@@ -32,6 +32,50 @@ class Switch : VimExtension {
           ?: VimList(mutableListOf())
       return patternLoader.getEnabledPatterns(builtinDefinitions, customDefinitions, reverse)
     }
+
+    // Creates patterns that preserve case but don't require word boundaries
+    fun createNormalizedCasePatterns(words: List<VimDataType>): VimList {
+      val list =
+        ArrayList<VimDataType>().apply {
+          words.forEach { word ->
+            words.forEach { otherWord ->
+              if (word != otherWord) {
+                add(
+                  VimList(
+                    mutableListOf(
+                      VimString("(?i)$word"),
+                      VimString(otherWord.toString()),
+                    ),
+                  ),
+                )
+              }
+            }
+          }
+        }
+      return VimList(list)
+    }
+
+    // Creates patterns that both preserve case and require word boundaries
+    fun createNormalizedCaseWordPatterns(words: List<VimDataType>): VimList {
+      val list =
+        ArrayList<VimDataType>().apply {
+          words.forEach { word ->
+            words.forEach { otherWord ->
+              if (word != otherWord) {
+                add(
+                  VimList(
+                    mutableListOf(
+                      VimString("(?i)\\b${word}\\b"),
+                      VimString(otherWord.toString()),
+                    ),
+                  ),
+                )
+              }
+            }
+          }
+        }
+      return VimList(list)
+    }
   }
 
   override fun getName(): String = "switch"
@@ -111,28 +155,6 @@ class Switch : VimExtension {
     }
   }
 
-  // Creates patterns that preserve case but don't require word boundaries
-  private fun createNormalizedCasePatterns(words: List<VimDataType>): VimList {
-    val list =
-      ArrayList<VimDataType>().apply {
-        words.forEach { word ->
-          words.forEach { otherWord ->
-            if (word != otherWord) {
-              add(
-                VimList(
-                  mutableListOf(
-                    VimString("(?i)$word"),
-                    VimString(otherWord.toString()),
-                  ),
-                ),
-              )
-            }
-          }
-        }
-      }
-    return VimList(list)
-  }
-
   // Creates patterns that require word boundaries but don't preserve case
   private fun createWordBoundaryPatterns(words: List<VimDataType>): VimList {
     val list =
@@ -147,28 +169,6 @@ class Switch : VimExtension {
               ),
             ),
           )
-        }
-      }
-    return VimList(list)
-  }
-
-  // Creates patterns that both preserve case and require word boundaries
-  private fun createNormalizedCaseWordPatterns(words: List<VimDataType>): VimList {
-    val list =
-      ArrayList<VimDataType>().apply {
-        words.forEach { word ->
-          words.forEach { otherWord ->
-            if (word != otherWord) {
-              add(
-                VimList(
-                  mutableListOf(
-                    VimString("(?i)\\b${word}\\b"),
-                    VimString(otherWord.toString()),
-                  ),
-                ),
-              )
-            }
-          }
         }
       }
     return VimList(list)

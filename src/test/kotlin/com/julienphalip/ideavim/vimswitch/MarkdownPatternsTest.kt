@@ -3,7 +3,7 @@ package com.julienphalip.ideavim.vimswitch
 import org.assertj.core.api.Assertions.assertThat
 
 class MarkdownPatternsTest : SwitchTestBase() {
-  override fun getPatternString(): String = "group:markdown"
+  override fun getDefinitions(): String = "group:markdown"
 
   fun testBasicTaskToggle() {
     assertThat(switch("- [<caret> ] Task")).isEqualTo("- [<caret>x] Task")

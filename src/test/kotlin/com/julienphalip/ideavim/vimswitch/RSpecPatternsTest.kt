@@ -3,7 +3,7 @@ package com.julienphalip.ideavim.vimswitch
 import org.assertj.core.api.Assertions.assertThat
 
 class RSpecPatternsTest : SwitchTestBase() {
-  override fun getPatternString(): String = "group:rspec"
+  override fun getDefinitions(): String = "group:rspec"
 
   fun testShould() {
     assertThat(switch("it <caret>should work")).isEqualTo("it <caret>should_not work")

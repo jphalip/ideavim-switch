@@ -3,7 +3,7 @@ package com.julienphalip.ideavim.vimswitch
 import org.assertj.core.api.Assertions.assertThat
 
 class JavaPatternsTest : SwitchTestBase() {
-  override fun getPatternString(): String = "group:java"
+  override fun getDefinitions(): String = "group:java"
 
   fun testJavaAssertions() {
     assertThat(switch("assert<caret>Equals(expected, actual)"))

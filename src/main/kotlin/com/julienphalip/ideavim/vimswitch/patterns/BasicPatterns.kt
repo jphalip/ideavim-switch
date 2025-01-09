@@ -25,7 +25,13 @@ object BasicPatterns {
   val patterns =
     mapOf(
       PatternNames.BINARY.id to words("0", "1"),
-      PatternNames.UP_DOWN_LEFT_RIGHT.id to normalizedCaseWords("up", "down", "left", "right"),
+      PatternNames.UP_DOWN_LEFT_RIGHT.id to
+        normalizedCaseWords(
+          "up",
+          "down",
+          "left",
+          "right",
+        ),
       PatternNames.LOGICAL_OPS.id to
         mapOf(
           "&&" to "||",

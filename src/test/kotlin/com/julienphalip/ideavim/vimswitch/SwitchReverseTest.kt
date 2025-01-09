@@ -8,7 +8,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
 class SwitchReverseTest : SwitchTestBase() {
-  override fun getPatternString(): String = "group:basic,group:java"
+  override fun getDefinitions(): String = "group:basic,group:java"
 
   @Mock private lateinit var variableService: VariableService
 
@@ -18,9 +18,9 @@ class SwitchReverseTest : SwitchTestBase() {
   override fun setUp() {
     super.setUp()
     `when`(variableService.getGlobalVariableValue("switch_definitions"))
-      .thenReturn(VimString(getPatternString()))
+      .thenReturn(VimString(getDefinitions()))
     `when`(variableService.getGlobalVariableValue("switch_custom_definitions"))
-      .thenReturn(VimList(mutableListOf()))
+      .thenReturn(getCustomDefinitions())
   }
 
   private fun switchReverse(input: String): String {
@@ -31,7 +31,7 @@ class SwitchReverseTest : SwitchTestBase() {
 
     val definitions =
       patternLoader.getEnabledPatterns(
-        getPatternString(),
+        getDefinitions(),
         VimList(
           mutableListOf(),
         ),

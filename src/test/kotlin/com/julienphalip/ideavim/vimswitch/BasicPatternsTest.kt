@@ -3,7 +3,7 @@ package com.julienphalip.ideavim.vimswitch
 import org.assertj.core.api.Assertions.assertThat
 
 class BasicPatternsTest : SwitchTestBase() {
-  override fun getPatternString(): String = "group:basic"
+  override fun getDefinitions(): String = "group:basic"
 
   fun testBinary() {
     assertThat(switch("value = <caret>0")).isEqualTo("value = <caret>1")
