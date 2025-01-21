@@ -1,4 +1,6 @@
-## [Next]
+## 1.0.3
+
+* Fixed custom definition methods.
 
 ## 1.0.2
 
